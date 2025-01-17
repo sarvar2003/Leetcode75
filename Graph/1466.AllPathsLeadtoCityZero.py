@@ -1,24 +1,32 @@
-from typing import List
+from collections import defaultdict
 class Solution:
     def minReorder(self, n: int, connections: List[List[int]]) -> int:
+        edges = set([(a,b) for a, b in connections])
+        graph = defaultdict(list)
 
-        connectionsToZero = set([0])
+        for a, b in connections:
+            graph[a].append(b) 
+            graph[b].append(a)
+
+
+        visited = set()
         changes = 0
-        
-        stack = connections.copy()
-        while stack and len(connectionsToZero) <= len(connections):
-            temp = []
-            for a, b in stack:
-                if not b or b in connectionsToZero:
-                    connectionsToZero.add(a)
-                elif not a or a in connectionsToZero:
+        cities = [0]
+
+        while cities:
+            city = cities.pop()
+            
+            if city in visited: continue
+            visited.add(city)
+
+            for neighbor in graph[city]:
+                if neighbor in visited: continue
+                if (neighbor, city) not in edges:
                     changes += 1
-                    connectionsToZero.add(b)
-                else:
-                    temp.append([a,b])
-            stack = temp
-                
+                cities.append(neighbor)
+        
         return changes
 
-# Time: O(n^2)
-# Space: O(n)
+
+# Time: O(V+E)
+# Space: O(V+E)
