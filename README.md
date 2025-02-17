@@ -1,1 +1,2 @@
-## Leetcode 75 list solutions for interview prep
+## Solutions to LeetCode75 problems on LeetCode
+Link: https://leetcode.com/studyplan/leetcode-75/
